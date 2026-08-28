@@ -1,0 +1,504 @@
+/**
+ * Styles for local_xp - XP & Leaderboard system.
+ *
+ * @package    local_xp
+ * @copyright  2026 Your Name
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
+
+/* ═══════════════════════════════════════════
+   Variables
+   ═══════════════════════════════════════════ */
+:root {
+    --xp-primary: #6366f1;
+    --xp-primary-light: #818cf8;
+    --xp-primary-dark: #4f46e5;
+    --xp-gold: #f59e0b;
+    --xp-gold-bg: #fffbeb;
+    --xp-silver: #9ca3af;
+    --xp-silver-bg: #f9fafb;
+    --xp-bronze: #d97706;
+    --xp-bronze-bg: #fffbeb;
+    --xp-success: #10b981;
+    --xp-bg-card: #ffffff;
+    --xp-bg-surface: #f8fafc;
+    --xp-text: #1e293b;
+    --xp-text-muted: #64748b;
+    --xp-border: #e2e8f0;
+    --xp-shadow: 0 1px 3px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.06);
+    --xp-shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    --xp-radius: 12px;
+    --xp-radius-sm: 8px;
+    --xp-transition: 0.2s ease;
+}
+
+/* ═══════════════════════════════════════════
+   User Summary Card
+   ═══════════════════════════════════════════ */
+.xp-user-summary-card {
+    background: linear-gradient(135deg, var(--xp-primary) 0%, var(--xp-primary-dark) 100%);
+    border-radius: var(--xp-radius);
+    padding: 24px 32px;
+    margin-bottom: 24px;
+    box-shadow: var(--xp-shadow-lg);
+    color: #fff;
+}
+
+.xp-summary-inner {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    gap: 32px;
+    flex-wrap: wrap;
+}
+
+.xp-summary-stat {
+    text-align: center;
+    min-width: 120px;
+}
+
+.xp-summary-label {
+    display: block;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    opacity: 0.85;
+    margin-bottom: 4px;
+}
+
+.xp-summary-value {
+    display: block;
+    font-size: 2rem;
+    font-weight: 800;
+    line-height: 1.2;
+}
+
+.xp-summary-sub {
+    display: block;
+    font-size: 0.75rem;
+    opacity: 0.7;
+    margin-top: 2px;
+}
+
+.xp-max-badge {
+    background: var(--xp-gold);
+    color: #1e293b;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 0.65rem;
+    font-weight: 700;
+    display: inline-block;
+    margin-top: 4px;
+}
+
+/* ═══════════════════════════════════════════
+   Progress Bar
+   ═══════════════════════════════════════════ */
+.xp-progress-bar-container {
+    width: 100%;
+    height: 8px;
+    background: rgba(255, 255, 255, 0.25);
+    border-radius: 4px;
+    overflow: hidden;
+    margin-top: 8px;
+}
+
+.xp-progress-bar {
+    height: 100%;
+    background: linear-gradient(90deg, var(--xp-gold) 0%, #fbbf24 100%);
+    border-radius: 4px;
+    transition: width 0.6s ease;
+    min-width: 2px;
+}
+
+.xp-progress-small {
+    height: 6px;
+    background: var(--xp-border);
+}
+
+.xp-progress-small .xp-progress-bar {
+    background: linear-gradient(90deg, var(--xp-primary) 0%, var(--xp-primary-light) 100%);
+}
+
+.xp-progress-tiny {
+    height: 4px;
+    background: var(--xp-border);
+}
+
+.xp-progress-tiny .xp-progress-bar {
+    background: var(--xp-primary);
+}
+
+/* ═══════════════════════════════════════════
+   Leaderboard Table
+   ═══════════════════════════════════════════ */
+.xp-leaderboard-table-wrapper {
+    background: var(--xp-bg-card);
+    border-radius: var(--xp-radius);
+    box-shadow: var(--xp-shadow);
+    overflow: hidden;
+    border: 1px solid var(--xp-border);
+}
+
+.xp-leaderboard-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.xp-leaderboard-table thead th {
+    background: var(--xp-bg-surface);
+    padding: 12px 16px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--xp-text-muted);
+    border-bottom: 2px solid var(--xp-border);
+    text-align: left;
+}
+
+.xp-leaderboard-table tbody tr {
+    border-bottom: 1px solid var(--xp-border);
+    transition: background var(--xp-transition);
+}
+
+.xp-leaderboard-table tbody tr:last-child {
+    border-bottom: none;
+}
+
+.xp-leaderboard-table tbody tr:hover {
+    background: var(--xp-bg-surface);
+}
+
+.xp-leaderboard-table td {
+    padding: 12px 16px;
+    vertical-align: middle;
+}
+
+/* Rank column */
+.xp-col-rank {
+    width: 60px;
+    text-align: center;
+}
+
+.xp-rank-num {
+    font-weight: 700;
+    font-size: 0.9rem;
+    color: var(--xp-text-muted);
+}
+
+.xp-medal {
+    font-size: 1.4rem;
+}
+
+/* User column */
+.xp-col-user {
+    min-width: 200px;
+}
+
+.xp-user-link {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    text-decoration: none;
+    color: var(--xp-text);
+}
+
+.xp-user-link:hover {
+    color: var(--xp-primary);
+}
+
+.xp-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid var(--xp-border);
+    flex-shrink: 0;
+}
+
+.xp-username {
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+/* Level pill */
+.xp-level-pill {
+    display: inline-block;
+    background: linear-gradient(135deg, var(--xp-primary) 0%, var(--xp-primary-light) 100%);
+    color: #fff;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    min-width: 50px;
+    text-align: center;
+}
+
+/* Points column */
+.xp-col-points {
+    text-align: right;
+    min-width: 80px;
+}
+
+.xp-points {
+    font-weight: 800;
+    font-size: 1rem;
+    color: var(--xp-primary-dark);
+}
+
+.xp-points-label {
+    font-size: 0.7rem;
+    color: var(--xp-text-muted);
+    margin-left: 2px;
+}
+
+/* Progress column */
+.xp-col-progress {
+    min-width: 120px;
+}
+
+.xp-progress-text {
+    display: block;
+    font-size: 0.7rem;
+    color: var(--xp-text-muted);
+    margin-top: 4px;
+    text-align: right;
+}
+
+/* Rank highlight rows */
+.xp-rank-gold {
+    background: var(--xp-gold-bg) !important;
+}
+
+.xp-rank-silver {
+    background: var(--xp-silver-bg) !important;
+}
+
+.xp-rank-bronze {
+    background: var(--xp-bronze-bg) !important;
+}
+
+/* Current user highlight */
+.xp-current-user {
+    background: #eef2ff !important;
+    border-left: 3px solid var(--xp-primary) !important;
+}
+
+.xp-current-user .xp-username {
+    color: var(--xp-primary-dark);
+}
+
+/* ═══════════════════════════════════════════
+   Empty State
+   ═══════════════════════════════════════════ */
+.xp-empty-state {
+    text-align: center;
+    padding: 48px 24px;
+    color: var(--xp-text-muted);
+    background: var(--xp-bg-card);
+    border-radius: var(--xp-radius);
+    border: 2px dashed var(--xp-border);
+}
+
+.xp-empty-icon {
+    font-size: 3rem;
+    margin-bottom: 12px;
+}
+
+.xp-empty-state p {
+    font-size: 1rem;
+    margin: 0;
+}
+
+/* ═══════════════════════════════════════════
+   Pagination
+   ═══════════════════════════════════════════ */
+.xp-pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 4px;
+    margin-top: 24px;
+    flex-wrap: wrap;
+}
+
+.xp-page-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 36px;
+    height: 36px;
+    padding: 0 8px;
+    border-radius: var(--xp-radius-sm);
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--xp-text);
+    text-decoration: none;
+    background: var(--xp-bg-card);
+    border: 1px solid var(--xp-border);
+    transition: all var(--xp-transition);
+}
+
+.xp-page-link:hover {
+    background: var(--xp-bg-surface);
+    border-color: var(--xp-primary-light);
+    color: var(--xp-primary);
+}
+
+.xp-page-active {
+    background: var(--xp-primary) !important;
+    color: #fff !important;
+    border-color: var(--xp-primary) !important;
+}
+
+/* ═══════════════════════════════════════════
+   Block Widget Styles
+   ═══════════════════════════════════════════ */
+.xp-block-leaderboard {
+    font-size: 0.85rem;
+}
+
+.xp-block-user-summary {
+    padding: 8px 0;
+}
+
+.xp-block-user-info {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 6px;
+}
+
+.xp-block-rank {
+    font-weight: 800;
+    font-size: 1.1rem;
+    color: var(--xp-primary);
+}
+
+.xp-block-user-points {
+    font-weight: 600;
+    color: var(--xp-text);
+    margin-left: auto;
+}
+
+.xp-block-user-level {
+    background: var(--xp-primary);
+    color: #fff;
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-size: 0.7rem;
+    font-weight: 700;
+}
+
+.xp-block-divider {
+    border: none;
+    border-top: 1px solid var(--xp-border);
+    margin: 8px 0;
+}
+
+.xp-block-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.xp-block-entry {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 4px;
+    border-radius: 6px;
+    transition: background var(--xp-transition);
+}
+
+.xp-block-entry:hover {
+    background: var(--xp-bg-surface);
+}
+
+.xp-block-entry.xp-current-user {
+    background: #eef2ff;
+    border-left: 2px solid var(--xp-primary);
+}
+
+.xp-block-entry-rank {
+    width: 24px;
+    text-align: center;
+    font-weight: 700;
+    font-size: 0.75rem;
+    color: var(--xp-text-muted);
+    flex-shrink: 0;
+}
+
+.xp-block-avatar {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    object-fit: cover;
+    flex-shrink: 0;
+}
+
+.xp-block-entry-name {
+    flex: 1;
+    font-weight: 500;
+    font-size: 0.8rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.xp-block-entry-points {
+    font-weight: 700;
+    font-size: 0.8rem;
+    color: var(--xp-primary-dark);
+    flex-shrink: 0;
+}
+
+.xp-block-empty {
+    text-align: center;
+    color: var(--xp-text-muted);
+    padding: 16px 8px;
+    font-size: 0.8rem;
+}
+
+.xp-block-footer {
+    text-align: center;
+    padding-top: 8px;
+    border-top: 1px solid var(--xp-border);
+    margin-top: 8px;
+}
+
+.xp-block-link {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--xp-primary);
+    text-decoration: none;
+}
+
+.xp-block-link:hover {
+    text-decoration: underline;
+}
+
+/* ═══════════════════════════════════════════
+   Responsive
+   ═══════════════════════════════════════════ */
+@media (max-width: 768px) {
+    .xp-summary-inner {
+        flex-direction: column;
+        gap: 16px;
+    }
+
+    .xp-user-summary-card {
+        padding: 16px;
+    }
+
+    .xp-col-progress {
+        display: none;
+    }
+
+    .xp-leaderboard-table td,
+    .xp-leaderboard-table th {
+        padding: 8px 12px;
+    }
+}

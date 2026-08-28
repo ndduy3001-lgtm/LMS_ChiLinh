@@ -1,0 +1,66 @@
+{{!
+    @template local_xp/block_leaderboard
+
+    Compact leaderboard widget for the block plugin.
+
+    Context variables required:
+    * hasentries - bool
+    * entries - array - Top N entries.
+    * leaderboardurl - string - URL to full leaderboard.
+    * usersummary - object|null - Current user's summary.
+    * hasusersummary - bool
+
+    Example context (json):
+    {
+        "hasentries": true,
+        "entries": [{"rank": 1, "fullname": "Alice", "points": "300", "level": 2}],
+        "leaderboardurl": "/local/xp/leaderboard.php"
+    }
+}}
+<div class="xp-block-leaderboard">
+
+    {{! ── Current User Mini Summary ── }}
+    {{#hasusersummary}}
+    <div class="xp-block-user-summary">
+        <div class="xp-block-user-info">
+            <span class="xp-block-rank">#{{usersummary.rank}}</span>
+            <span class="xp-block-user-points">{{usersummary.points}} XP</span>
+            <span class="xp-block-user-level">Lv.{{usersummary.level}}</span>
+        </div>
+        <div class="xp-progress-bar-container xp-progress-tiny">
+            <div class="xp-progress-bar" style="width: {{usersummary.progress}}%"></div>
+        </div>
+    </div>
+    <hr class="xp-block-divider" />
+    {{/hasusersummary}}
+
+    {{! ── Top Entries ── }}
+    {{#hasentries}}
+    <ol class="xp-block-list">
+        {{#entries}}
+        <li class="xp-block-entry {{#iscurrentuser}}xp-current-user{{/iscurrentuser}}">
+            <span class="xp-block-entry-rank">
+                {{#istop1}}🥇{{/istop1}}
+                {{#istop2}}🥈{{/istop2}}
+                {{#istop3}}🥉{{/istop3}}
+                {{^istop1}}{{^istop2}}{{^istop3}}{{rank}}{{/istop3}}{{/istop2}}{{/istop1}}
+            </span>
+            <img src="{{userpictureurl}}" alt="" class="xp-block-avatar" />
+            <span class="xp-block-entry-name">{{fullname}}</span>
+            <span class="xp-block-entry-points">{{points}}</span>
+        </li>
+        {{/entries}}
+    </ol>
+    {{/hasentries}}
+
+    {{^hasentries}}
+    <p class="xp-block-empty">{{#str}}noleaderboarddata, local_xp{{/str}}</p>
+    {{/hasentries}}
+
+    {{! ── Link to full page ── }}
+    <div class="xp-block-footer">
+        <a href="{{leaderboardurl}}" class="xp-block-link">
+            {{#str}}viewfullleaderboard, local_xp{{/str}} &rarr;
+        </a>
+    </div>
+</div>

@@ -1,0 +1,141 @@
+{{!
+    @template local_xp/leaderboard
+
+    Full leaderboard page template.
+
+    Context variables required:
+    * hasentries - bool - Whether there are entries.
+    * entries - array - Leaderboard entries.
+    * hasusersummary - bool - Whether user summary is available.
+    * usersummary - object - Current user's XP summary.
+    * haspages - bool - Whether pagination is needed.
+    * pages - array - Page numbers.
+    * hasprevious - bool
+    * hasnext - bool
+    * previousurl - string
+    * nexturl - string
+    * iscourseview - bool
+    * courseid - int
+
+    Example context (json):
+    {
+        "hasentries": true,
+        "entries": [{"rank": 1, "fullname": "John", "points": "500", "level": 3, "progress": 65}],
+        "hasusersummary": true,
+        "usersummary": {"rank": 5, "points": "200", "level": 2}
+    }
+}}
+<div class="local-xp-leaderboard-page">
+
+    {{! ── User Summary Card ── }}
+    {{#hasusersummary}}
+    <div class="xp-user-summary-card">
+        <div class="xp-summary-inner">
+            <div class="xp-summary-stat">
+                <span class="xp-summary-label">{{#str}}rank, local_xp{{/str}}</span>
+                <span class="xp-summary-value xp-rank-value">#{{usersummary.rank}}</span>
+                <span class="xp-summary-sub">{{#str}}of, local_xp{{/str}} {{usersummary.totalcount}}</span>
+            </div>
+            <div class="xp-summary-stat">
+                <span class="xp-summary-label">{{#str}}totalxp, local_xp{{/str}}</span>
+                <span class="xp-summary-value xp-points-value">{{usersummary.points}}</span>
+                <span class="xp-summary-sub">XP</span>
+            </div>
+            <div class="xp-summary-stat">
+                <span class="xp-summary-label">{{#str}}currentlevel, local_xp{{/str}}</span>
+                <span class="xp-summary-value xp-level-badge">{{usersummary.level}}</span>
+                <div class="xp-progress-bar-container">
+                    <div class="xp-progress-bar" style="width: {{usersummary.progress}}%"></div>
+                </div>
+                {{#usersummary.ismaxlevel}}
+                    <span class="xp-summary-sub xp-max-badge">{{#str}}maxlevelreached, local_xp{{/str}}</span>
+                {{/usersummary.ismaxlevel}}
+                {{^usersummary.ismaxlevel}}
+                    <span class="xp-summary-sub">{{#str}}xptonextlevel, local_xp, {{usersummary.xptonext}}{{/str}}</span>
+                {{/usersummary.ismaxlevel}}
+            </div>
+        </div>
+    </div>
+    {{/hasusersummary}}
+
+    {{! ── Leaderboard Table ── }}
+    {{#hasentries}}
+    <div class="xp-leaderboard-table-wrapper">
+        <table class="xp-leaderboard-table">
+            <thead>
+                <tr>
+                    <th class="xp-col-rank">{{#str}}rank, local_xp{{/str}}</th>
+                    <th class="xp-col-user">{{#str}}user, local_xp{{/str}}</th>
+                    <th class="xp-col-level">{{#str}}level, local_xp{{/str}}</th>
+                    <th class="xp-col-points">{{#str}}points, local_xp{{/str}}</th>
+                    <th class="xp-col-progress">{{#str}}progress, local_xp{{/str}}</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#entries}}
+                <tr class="xp-entry {{#iscurrentuser}}xp-current-user{{/iscurrentuser}} {{#istop1}}xp-rank-gold{{/istop1}} {{#istop2}}xp-rank-silver{{/istop2}} {{#istop3}}xp-rank-bronze{{/istop3}}">
+                    <td class="xp-col-rank">
+                        {{#istop1}}<span class="xp-medal">🥇</span>{{/istop1}}
+                        {{#istop2}}<span class="xp-medal">🥈</span>{{/istop2}}
+                        {{#istop3}}<span class="xp-medal">🥉</span>{{/istop3}}
+                        {{^istop1}}{{^istop2}}{{^istop3}}<span class="xp-rank-num">{{rank}}</span>{{/istop3}}{{/istop2}}{{/istop1}}
+                    </td>
+                    <td class="xp-col-user">
+                        <a href="{{profileurl}}" class="xp-user-link">
+                            <img src="{{userpictureurl}}" alt="{{fullname}}" class="xp-avatar" />
+                            <span class="xp-username">{{fullname}}</span>
+                        </a>
+                    </td>
+                    <td class="xp-col-level">
+                        <span class="xp-level-pill">Lv.{{level}}</span>
+                    </td>
+                    <td class="xp-col-points">
+                        <span class="xp-points">{{points}}</span>
+                        <span class="xp-points-label">XP</span>
+                    </td>
+                    <td class="xp-col-progress">
+                        <div class="xp-progress-bar-container xp-progress-small">
+                            <div class="xp-progress-bar" style="width: {{progress}}%"></div>
+                        </div>
+                        {{^ismaxlevel}}
+                            <span class="xp-progress-text">{{progress}}%</span>
+                        {{/ismaxlevel}}
+                        {{#ismaxlevel}}
+                            <span class="xp-progress-text xp-max-badge">MAX</span>
+                        {{/ismaxlevel}}
+                    </td>
+                </tr>
+                {{/entries}}
+            </tbody>
+        </table>
+    </div>
+    {{/hasentries}}
+
+    {{^hasentries}}
+    <div class="xp-empty-state">
+        <div class="xp-empty-icon">🏆</div>
+        <p>{{#str}}noleaderboarddata, local_xp{{/str}}</p>
+    </div>
+    {{/hasentries}}
+
+    {{! ── Pagination ── }}
+    {{#haspages}}
+    <nav class="xp-pagination" aria-label="Leaderboard pagination">
+        {{#hasprevious}}
+            <a href="{{previousurl}}" class="xp-page-link xp-page-prev">&laquo;</a>
+        {{/hasprevious}}
+        {{#pages}}
+            {{#isactive}}
+                <span class="xp-page-link xp-page-active">{{pagenum}}</span>
+            {{/isactive}}
+            {{^isactive}}
+                <a href="{{url}}" class="xp-page-link">{{pagenum}}</a>
+            {{/isactive}}
+        {{/pages}}
+        {{#hasnext}}
+            <a href="{{nexturl}}" class="xp-page-link xp-page-next">&raquo;</a>
+        {{/hasnext}}
+    </nav>
+    {{/haspages}}
+
+</div>
